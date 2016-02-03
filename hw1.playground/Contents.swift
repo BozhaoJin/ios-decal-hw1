@@ -22,33 +22,34 @@ class Words {
 //: ### variables the same type? If not, why?
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: [EXPLAIN YOUR ANSWER HERE] Yes, they are both declared as String are being assigned the values in the init method. However, the values passed into init is by specifying optional chaining which we wish is non-nil. Those set to the instance are forcefully unwrapped and might cause runtime error if optional is nil. Also, a return true is added at the end.
 
 
 //: ## Q2: Variable Types and Function Types
-    func arePalindromes(words: [String]) -> Bool {
+    static func arePalindromes(words: [String]) -> Bool {
         let reversedWords = words.map() {String($0.characters.reverse())}
-        var numElements = words.count
+        let numElements = words.count
         
-        for let i = 0; i < numElements; i++ {
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
+        return true
     }
 //: ### Why does the compiler dislike the **for loop**? Fix it.
 //: ### What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: [EXPLAIN YOUR ANSWER HERE] The compiler dislikes the for loop because we we let i = 0, which we set i as a constant and thus cannot be altered. So i++ will cause an error. In order to call Words.arePalindromes, we need the method to be static. Also, since we are not altering the value of numElements, we can use let instead of var for numElements.
 
 
 //: ## Q3: More Functions and Object Initialization
-    class func isAnagram() -> Bool {
-        var countLetters : [Character : Int] //Line X
-        var lenA = self.wordA.characters.count
-        var lenB = self.wordB.characters.count
+    func isAnagram() -> Bool {
+        var countLetters : [Character : Int] = [Character : Int]() //Line X
+        let lenA = self.wordA.characters.count
+        let lenB = self.wordB.characters.count
         
         if lenA != lenB {
             return false
@@ -75,13 +76,13 @@ class Words {
             }
         }
         
-        for (letter, count) in countLetters {
+        for (_, count) in countLetters {
             if count != 0 {
                 return false
             }
         }
         
-        return nil
+        return true
     }
 //: ### What is the problem with declaring **countLetters** as we do in **Line X**,
 //: ### and then using it in **Line Y**? Fix it (by only changing **Line X**).
@@ -89,7 +90,7 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: [EXPLAIN YOUR ANSWER HERE] In Line X, the dictionary is not initialized, so it will cause a runtime error on Line Y when trying to access it (null pointer exception). Also, we should remove the word class, this is just a func. Return nil is changed to return true for boolean type return. lenA and lenB are changed to let instead of var.
     
     
 }
